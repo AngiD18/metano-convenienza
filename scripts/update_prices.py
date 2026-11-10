@@ -18,6 +18,7 @@ STATIONS = {
     "arz": {"id": "14486", "city": "piove di sacco", "words": ("borgo", "botteghe")},
     "can": {"id": "56676", "city": "candiana", "words": ("mare",)},
     "eni": {"id": "13223", "city": "padova", "words": ("stati", "uniti")},
+    "sao": {"id": "12368", "city": "saonara", "words": ("vittorio", "emanuele")},
 }
 
 def norm(value: str) -> str:

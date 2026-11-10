@@ -1,10 +1,11 @@
 # Dove conviene fare metano?
 
-Web app statica per iPhone, pubblicabile su GitHub Pages, dedicata al confronto di tre distributori di metano in provincia di Padova.
+Web app statica per iPhone, pubblicabile su GitHub Pages, dedicata al confronto di quattro distributori di metano in provincia di Padova.
 
 - ValliCarburanti – Arzerello, via Borgo Botteghe 45
 - Tamoil – Candiana, via del Mare 6
 - Enilive – Padova, corso Stati Uniti 27
+- AF Petroli – Saonara, via Vittorio Emanuele II (MIMIT 12368)
 
 ## Funzionalità
 
@@ -30,6 +31,6 @@ La procedura identifica i distributori verificando sia indirizzo e comune sia, q
 
 Prezzi ufficiali MIMIT: https://www.mimit.gov.it/it/open-data/elenco-dataset/carburanti-prezzi-praticati-e-anagrafica-degli-impianti
 
-Percorsi: servizi pubblici OpenStreetMap / Nominatim / OSRM. Le distanze sono stime; gli orari per l'erogazione del metano possono differire dagli orari generali del distributore. Il calcolo monetizza solo il metano aggiuntivo, non tempo di viaggio, usura né pedaggi.
+Percorsi: servizi pubblici OpenStreetMap / Nominatim / Photon / OSRM. Le distanze sono stime; gli orari per l'erogazione del metano possono differire dagli orari generali del distributore. Il calcolo monetizza solo il metano aggiuntivo, non tempo di viaggio, usura né pedaggi.
 
 **Privacy:** il repository GitHub Pages è pubblico e non include indirizzi personali, posizione o tragitti predefiniti. Partenza e destinazione vengono inserite dall’utente e salvate esclusivamente nel `localStorage` del browser utilizzato, non su GitHub. Gli indirizzi vengono inviati a Nominatim/OSRM soltanto dopo aver premuto «Calcola deviazioni stradali»; le richieste possono essere registrate da quei servizi. È presente il comando «Cancella i miei dati» per eliminare le preferenze locali. La pagina pubblica resta accessibile a chiunque conosca il link; non è prevista autenticazione.

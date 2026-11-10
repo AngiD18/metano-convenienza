@@ -16,6 +16,11 @@
       "price": 1.719,
       "reported_at": "09/11/2026",
       "status": "reference"
+    },
+    "sao": {
+      "price": 2.199,
+      "reported_at": "10/11/2026",
+      "status": "reference"
     }
   }
 }
