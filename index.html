@@ -130,9 +130,32 @@ async function routeBetween(arr){
  }
  throw Error('Servizi di calcolo stradale non disponibili ('+(lastError?.name==='AbortError'?'tempo massimo di attesa':lastError?.message||'errore di rete')+')')
 }
-function drawMap(orig,dest,locs,allRoutes){if(typeof L==='undefined')return;const el=$('map');el.classList.remove('hidden');if(!map)map=L.map('map',{scrollWheelZoom:false});mapLayers.forEach(l=>map.removeLayer(l));mapLayers=[];if(!map._osmLayer){map._osmLayer=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors',maxZoom:18}).addTo(map)}
- const layers=allRoutes.map((route,i)=>{const st=stations[i-1],color=i===0?'#6d8588':st.color;const lyr=L.geoJSON(route.geometry,{style:{color,opacity:i===0?.5:.9,weight:i===0?4:5,dashArray:i===0?'6 8':null}}).addTo(map);mapLayers.push(lyr);return lyr});
- const pts=[{p:orig,label:'Partenza',color:'#18363d'},{p:dest,label:'Destinazione',color:'#18363d'},...stations.map(s=>({p:locs[s.id],label:s.name+' · '+s.place,color:s.color}))];pts.forEach(item=>{const m=L.circleMarker([item.p.lat,item.p.lon],{radius:7,fillColor:item.color,fillOpacity:1,color:'white',weight:2}).addTo(map).bindPopup(item.label);mapLayers.push(m)});map.fitBounds(L.featureGroup(layers).getBounds().pad(.12));setTimeout(()=>map.invalidateSize(),200)}
+function drawMap(orig,dest,locs,allRoutes){
+ if(typeof L==='undefined')return false;
+ const el=$('map');el.classList.remove('hidden');
+ if(!map)map=L.map('map',{scrollWheelZoom:false});
+ mapLayers.forEach(l=>{try{map.removeLayer(l)}catch{}});mapLayers=[];
+ if(!map._osmLayer)map._osmLayer=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors',maxZoom:18}).addTo(map);
+ const pts=[{p:orig,label:'Partenza',color:'#18363d'},{p:dest,label:'Destinazione',color:'#18363d'},...stations.map(s=>({p:locs[s.id],label:s.name+' · '+s.place,color:s.color}))];
+ // Validiamo le coordinate: una geometria stradale incompleta non deve interrompere il risultato.
+ const positions=pts.filter(x=>x.p&&Number.isFinite(x.p.lat)&&Number.isFinite(x.p.lon)).map(x=>[x.p.lat,x.p.lon]);
+ if(positions.length<2)throw Error('Coordinate mappa non valide');
+ allRoutes.forEach((route,i)=>{
+  const coords=route?.geometry?.coordinates;
+  if(!Array.isArray(coords)||coords.length<2)return;
+  const latlngs=coords.filter(p=>Array.isArray(p)&&p.length>=2&&Number.isFinite(p[0])&&Number.isFinite(p[1])).map(p=>[p[1],p[0]]);
+  if(latlngs.length<2)return;
+  const line=L.polyline(latlngs,{color:i===0?'#6d8588':stations[i-1].color,opacity:i===0?.5:.9,weight:i===0?4:5,dashArray:i===0?'6 8':null}).addTo(map);
+  mapLayers.push(line);
+ });
+ pts.forEach(item=>{if(!item.p||!Number.isFinite(item.p.lat)||!Number.isFinite(item.p.lon))return;
+  const marker=L.circleMarker([item.p.lat,item.p.lon],{radius:7,fillColor:item.color,fillOpacity:1,color:'white',weight:2}).addTo(map).bindPopup(item.label);mapLayers.push(marker)
+ });
+ const bounds=L.latLngBounds(positions);
+ if(bounds.isValid())map.fitBounds(bounds.pad(.18));
+ setTimeout(()=>{try{map.invalidateSize()}catch{}},200);
+ return true;
+}
 $('routeBtn').onclick=async()=>{const btn=$('routeBtn');btn.disabled=true;const status=$('routeStatus');status.className='status';status.textContent='Geolocalizzazione dei punti del percorso...';try{
  const cache=new Map(),geo=async addr=>{if(!cache.has(addr))cache.set(addr,await geocode(addr));return cache.get(addr)};
  if(!$('origin').value.trim()||!$('dest').value.trim())throw Error('Inserisci partenza e destinazione');const orig=await geo($('origin').value.trim()),dest=await geo($('dest').value.trim()),locs={};for(const s of stations)locs[s.id]=await geo(s.address);
@@ -141,7 +164,18 @@ $('routeBtn').onclick=async()=>{const btn=$('routeBtn');btn.disabled=true;const 
  const base=paths[0].distance/1000;
  stations.forEach((s,i)=>{s.extra=Math.max(0,(paths[i+1].distance-paths[0].distance)/1000);$('extra_'+s.id).value=s.extra.toFixed(2)});routeReady=true;
  $('routestats').innerHTML='<div class="grid2"><div class="stat"><div class="tiny">Tragitto diretto</div><b>'+fmtNum(base,1)+' km</b></div><div class="stat"><div class="tiny">Deviazioni misurate</div>'+stations.map(s=>'<div style="margin:5px 0">'+s.name+' · '+s.place+': <b style="display:inline;font-size:15px">+'+fmtNum(s.extra,1)+' km</b></div>').join('')+'</div></div>';
- status.textContent='Deviazioni calcolate. Le tratte colorate indicano il percorso passando per ciascun distributore.';drawMap(orig,dest,locs,paths);safeSet();calculate();
+ // Il confronto economico deve funzionare anche quando la mappa non viene visualizzata.
+ safeSet();calculate();
+ status.textContent='Deviazioni e costi calcolati correttamente.';
+ try{
+  const mapReady=drawMap(orig,dest,locs,paths);
+  status.textContent=mapReady?'Deviazioni e costi calcolati. La mappa indica i percorsi stradali.':'Deviazioni e costi calcolati. Mappa non disponibile, ma il confronto è completo.';
+ }catch(mapError){
+  console.warn('Mappa non disponibile:',mapError);
+  $('map').classList.add('hidden');
+  status.textContent='Deviazioni e costi calcolati. Impossibile visualizzare la mappa su questo dispositivo; il confronto resta valido.';
+  status.className='status warning';
+ }
  }catch(e){status.textContent='Impossibile calcolare il percorso: '+(e.name==='AbortError'?'tempo massimo di attesa':e.message)+'. Puoi riprovare oppure usare «Km extra manuali».';status.className='status warning'}finally{btn.disabled=false}};
 buildCards();extraWidget();calculate();setTimeout(refreshPrices,600);
 })();
