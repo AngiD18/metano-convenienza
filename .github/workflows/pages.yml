@@ -1,0 +1,61 @@
+name: Pubblica app metano e aggiorna prezzi MIMIT
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  schedule:
+    - cron: '40 9,16 * * *'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: metano-pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Scarica il repository
+        uses: actions/checkout@v4
+      - name: Configura Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Recupera prezzi ufficiali (se disponibili)
+        id: prices
+        continue-on-error: true
+        run: python scripts/update_prices.py
+      - name: Conserva ultimo aggiornamento nel repository
+        if: steps.prices.outcome == 'success'
+        run: |
+          if [ -n "$(git status --porcelain data/prices.json)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/prices.json
+            git commit -m "Aggiorna prezzi metano MIMIT"
+            git push
+          fi
+      - name: Crea i file per il sito
+        run: |
+          mkdir -p _site/data
+          cp index.html manifest.webmanifest icon.svg _site/
+          cp data/prices.json _site/data/prices.json
+          touch _site/.nojekyll
+      - name: Configura GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Carica il sito
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - name: Pubblica il sito
+        id: deployment
+        uses: actions/deploy-pages@v4
