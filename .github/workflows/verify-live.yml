@@ -1,0 +1,46 @@
+name: Verifica link pubblico calcolatore
+
+on:
+  push:
+    paths:
+      - .github/workflows/verify-live.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Controlla sito e file pubblici
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="https://angid18.github.io/metano-convenienza"
+          for PATHNAME in "/" "/data/prices.json" "/manifest.webmanifest" "/icon.svg"; do
+            URL="$BASE$PATHNAME"
+            echo "Controllo URL: $URL"
+            OK=0
+            for ATTEMPT in 1 2 3 4 5; do
+              HTTP=$(curl --location --silent --show-error --connect-timeout 10 --max-time 25 -o /tmp/metano_http -w "%{http_code}" "$URL" || true)
+              BYTES=$(wc -c < /tmp/metano_http 2>/dev/null || echo 0)
+              echo "Tentativo $ATTEMPT: HTTP $HTTP, $BYTES byte"
+              if [ "$HTTP" = "200" ] && [ "$BYTES" -gt 40 ]; then
+                OK=1
+                break
+              fi
+              sleep 6
+            done
+            if [ "$OK" -ne 1 ]; then
+              echo "::error::Non raggiungibile: $URL"
+              exit 1
+            fi
+            if [ "$PATHNAME" = "/" ]; then
+              grep -qi 'metano' /tmp/metano_http || { echo "::error::HTML inatteso"; exit 1; }
+            fi
+            if [ "$PATHNAME" = "/data/prices.json" ]; then
+              grep -q '"stations"' /tmp/metano_http || { echo "::error::JSON prezzi inatteso"; exit 1; }
+            fi
+          done
+          echo "OK: il sito e i suoi file sono pubblicamente raggiungibili"
