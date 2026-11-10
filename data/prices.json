@@ -1,0 +1,21 @@
+{
+  "updated_at": null,
+  "source": "Prezzi di riferimento al 10 novembre 2026, in attesa di verifica MIMIT",
+  "stations": {
+    "arz": {
+      "price": 2.499,
+      "reported_at": "09/11/2026",
+      "status": "reference"
+    },
+    "can": {
+      "price": 1.999,
+      "reported_at": "04/11/2026",
+      "status": "reference"
+    },
+    "eni": {
+      "price": 1.719,
+      "reported_at": "09/11/2026",
+      "status": "reference"
+    }
+  }
+}
