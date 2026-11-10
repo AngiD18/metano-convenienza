@@ -9,9 +9,9 @@
 </style>
 </head><body><main>
 <section class="hero"><div class="eyebrow">Calcolatore metano auto</div><h1>Dove conviene fare metano?</h1><p>Quattro distributori, prezzi ufficiali quando disponibili e costo della deviazione dal tuo viaggio. Puoi sempre modificare i prezzi e i chilometri manualmente.</p><span class="pill">4 distributori fissi</span><span class="pill">Prezzi MIMIT</span><span class="pill">Percorso personalizzato</span></section>
-<section class="card"><div class="row between"><div><h2>1 · Prezzi metano</h2><div class="sub">I prezzi iniziali sono indicativi. L’aggiornamento automatico legge i dati MIMIT pubblicati su questo sito; in caso di errore puoi inserire il prezzo manualmente.</div></div><button class="primary" id="syncBtn">↻ Aggiorna prezzi</button></div><div id="syncStatus" role="status">Caricamento dell’ultimo aggiornamento pubblicato...</div><div class="grid2" id="stations"></div><div class="line"></div><div class="grid2"><div class="field"><label for="kg">Quantità rifornimento · kg</label><input id="kg" type="number" inputmode="decimal" step="0.1" min="0.1" value="13"></div><div class="field"><label for="consumption">Consumo reale · kg/100 km</label><input id="consumption" type="number" inputmode="decimal" step="0.1" min="0.1" value="4.2"></div></div><p class="sub">Il prezzo modificato a mano resta bloccato e non viene sovrascritto dagli aggiornamenti successivi. Per riattivare il prezzo automatico usa «Ripristina auto».</p></section>
-<section class="card"><h2>2 · Percorso e deviazioni</h2><div class="grid2"><div class="field"><label for="origin">Partenza</label><input id="origin" value="" placeholder="Indirizzo di partenza" autocomplete="off"></div><div class="field"><label for="dest">Destinazione</label><input id="dest" value="" placeholder="Indirizzo di destinazione o coordinate" autocomplete="off"></div></div><p class="sub">Inserisci una volta i punti del tragitto: saranno salvati soltanto sul dispositivo. Gli indirizzi non vengono inviati a GitHub. Solo quando premi «Calcola deviazioni stradali», gli indirizzi e i punti del viaggio vengono inviati ai servizi cartografici esterni per cercare le coordinate e ottenere gli itinerari.</p><div class="tabrow"><button id="autoTab" class="selected" type="button">Calcolo automatico del tragitto</button><button id="manualTab" type="button">Km extra manuali</button></div><div id="autoPanel"><div class="row"><button class="primary" id="routeBtn">Calcola deviazioni stradali</button><button class="outline" id="roundBtn">Usa stessa partenza e destinazione</button></div><div id="routeStatus" class="status">Con connessione Internet, stima la strada diretta e la strada passando per ogni distributore.</div><div id="routestats"></div><div id="map" class="hidden"></div><p class="legal">Percorsi tramite OpenStreetMap (Nominatim, Photon e OSRM): stime per auto, non navigazione turn-by-turn. Servizi pubblici soggetti a disponibilità e limiti di utilizzo.</p></div><div id="manualPanel" class="hidden"><p class="sub">Inserisci la distanza aggiuntiva complessiva rispetto al percorso più breve tra partenza e destinazione. Non la distanza del distributore da casa.</p></div><p class="sub">Puoi anche aprire gli itinerari completi in Google Maps senza una chiave API: tocca «Apri itinerario in Google Maps» sotto uno dei distributori. Se partenza e destinazione sono compilate, Google Maps userà il distributore come tappa intermedia. Le distanze dell’app continuano a essere calcolate con OpenStreetMap.</p><div class="note" style="margin-top:14px">Gli orari del metano possono essere più limitati di quelli del distributore. Prima di fare una deviazione verifica che il servizio metano sia disponibile.</div><div class="row between" style="margin-top:14px"><div class="sub">Privacy: puoi cancellare in qualsiasi momento gli indirizzi, i prezzi personalizzati e le altre preferenze salvate su questo dispositivo.</div><button class="outline small" type="button" id="clearDataBtn">Cancella i miei dati</button></div></section>
-<section class="card"><h2>3 · Convenienza</h2><div id="outcome" class="result no" aria-live="polite"><div class="lead">Confronto</div><div class="big">Calcola le deviazioni</div><div class="sub">I risultati compariranno qui.</div></div><div id="costs" class="costs"></div><div id="assumptions" class="sub" style="margin-top:12px"></div><details style="margin-top:14px"><summary style="cursor:pointer;font-weight:700">Come viene calcolato</summary><p class="sub">Per ogni distributore: <strong>kg del pieno × prezzo al kg + km aggiuntivi × consumo (kg/100 km) ÷ 100 × prezzo al kg</strong>. Il distributore conveniente è quello con la spesa complessiva inferiore. Il tempo perso, i pedaggi e l'usura non sono monetizzati. I km extra sono calcolati rispetto al percorso diretto, quindi una stazione lungo la strada ha circa 0 km extra.</p></details></section>
+<section class="card"><div class="row between"><div><h2>1 · Prezzi metano</h2><div class="sub">I prezzi iniziali sono indicativi. L’aggiornamento automatico legge i dati MIMIT pubblicati su questo sito; in caso di errore puoi inserire il prezzo manualmente.</div></div><button class="primary" id="syncBtn">↻ Aggiorna prezzi</button></div><div id="syncStatus" role="status">Caricamento dell’ultimo aggiornamento pubblicato...</div><div class="grid2" id="stations"></div><div class="line"></div><div class="grid2"><div class="field"><label for="kg">Quantità rifornimento · kg</label><input id="kg" type="number" inputmode="decimal" step="0.1" min="0.1" value="13"></div><div class="field"><label for="consumption">Resa reale · km/kg</label><input id="consumption" type="number" inputmode="decimal" step="0.1" min="0.1" value="23.8"></div></div><p class="sub">Il prezzo modificato a mano resta bloccato e non viene sovrascritto dagli aggiornamenti successivi. Per riattivare il prezzo automatico usa «Ripristina auto».</p></section>
+<section class="card"><h2>2 · Percorso e deviazioni</h2><div class="grid2"><div class="field"><label for="origin">Partenza</label><input id="origin" value="" placeholder="Indirizzo di partenza" autocomplete="off"></div><div class="field"><label for="dest">Destinazione</label><input id="dest" value="" placeholder="Indirizzo di destinazione o coordinate" autocomplete="off"></div></div><p class="sub">Inserisci una volta i punti del tragitto: saranno salvati soltanto sul dispositivo. Gli indirizzi non vengono inviati a GitHub. Solo quando premi «Calcola deviazioni stradali», gli indirizzi e i punti del viaggio vengono inviati ai servizi cartografici esterni per cercare le coordinate e ottenere gli itinerari.</p><div class="tabrow"><button id="autoTab" class="selected" type="button">Calcolo automatico del tragitto</button><button id="manualTab" type="button">Km extra manuali</button></div><div id="autoPanel"><div class="row"><button class="primary" id="routeBtn">Calcola deviazioni stradali</button><button class="outline" id="roundBtn">Usa stessa partenza e destinazione</button></div><div id="routeStatus" class="status">Con connessione Internet, ricerca i percorsi più brevi in chilometri, direttamente o passando per ogni distributore.</div><div id="routestats"></div><div id="map" class="hidden"></div><p class="legal">Percorsi gratuiti tramite Valhalla (preferenza ai km minimi) e, se non disponibile, OSRM (più breve fra le alternative offerte), su dati OpenStreetMap. Il minimo assoluto non è garantito. Stime per auto, non navigazione turn-by-turn. I servizi possono essere temporaneamente non disponibili.</p></div><div id="manualPanel" class="hidden"><p class="sub">Inserisci la distanza aggiuntiva complessiva rispetto al tragitto diretto stimato tra partenza e destinazione. Non la distanza del distributore da casa.</p></div><p class="sub">Puoi anche aprire gli itinerari completi in Google Maps senza una chiave API: tocca «Apri itinerario in Google Maps» sotto uno dei distributori. Se partenza e destinazione sono compilate, Google Maps userà il distributore come tappa intermedia. Le distanze dell’app continuano a essere calcolate con OpenStreetMap.</p><div class="note" style="margin-top:14px">Gli orari del metano possono essere più limitati di quelli del distributore. Prima di fare una deviazione verifica che il servizio metano sia disponibile.</div><div class="row between" style="margin-top:14px"><div class="sub">Privacy: puoi cancellare in qualsiasi momento gli indirizzi, i prezzi personalizzati e le altre preferenze salvate su questo dispositivo.</div><button class="outline small" type="button" id="clearDataBtn">Cancella i miei dati</button></div></section>
+<section class="card"><h2>3 · Convenienza</h2><div id="outcome" class="result no" aria-live="polite"><div class="lead">Confronto</div><div class="big">Calcola le deviazioni</div><div class="sub">I risultati compariranno qui.</div></div><div id="costs" class="costs"></div><div id="assumptions" class="sub" style="margin-top:12px"></div><details style="margin-top:14px"><summary style="cursor:pointer;font-weight:700">Come viene calcolato</summary><p class="sub">Per ogni distributore: <strong>kg del pieno × prezzo al kg + (km aggiuntivi ÷ resa km/kg) × prezzo al kg</strong>. Il distributore conveniente è quello con la spesa complessiva inferiore. Il tempo perso, i pedaggi e l'usura non sono monetizzati. I km extra sono calcolati rispetto al percorso diretto, quindi una stazione lungo la strada ha circa 0 km extra.</p></details></section>
 <section class="card"><h2>Fonti e limiti degli aggiornamenti</h2><p class="legal">Fonte ufficiale: <a href="https://www.mimit.gov.it/it/open-data/elenco-dataset/carburanti-prezzi-praticati-e-anagrafica-degli-impianti" target="_blank" rel="noopener noreferrer">MIMIT · Osservaprezzi carburanti</a> (licenza IODL 2.0). I prezzi sono quelli comunicati dai gestori, pubblicati su base quotidiana e non necessariamente identici a quelli della pompa in questo momento. I dati vengono recuperati automaticamente da GitHub Actions e pubblicati come JSON su questo stesso sito, senza proxy esterni. Se non disponibili, vengono mostrati i prezzi di riferimento o quelli inseriti manualmente. Il mancato aggiornamento non modifica il prezzo inserito manualmente. Nessun servizio di accesso o abbonamento è richiesto per il calcolo locale.</p></section>
 <footer>Web app gratuita. In Safari: Condividi → Aggiungi alla schermata Home.</footer>
 </main>
@@ -30,8 +30,11 @@ const stations=[
 const initialPrices=Object.fromEntries(stations.map(s=>[s.id,s.price]));
 let mode='route',routeReady=false,map=null,mapLayers=[],priceStatus='';
 function safeGet(){try{return JSON.parse(localStorage.getItem(SAVEKEY)||'null')}catch{return null}}
-function safeSet(){try{localStorage.setItem(SAVEKEY,JSON.stringify({prices:stations.map(s=>({id:s.id,price:s.price,manual:s.manual,extra:s.extra,lastDate:s.lastDate,source:s.source||''})),kg:$('kg').value,consumption:$('consumption').value,origin:$('origin').value,dest:$('dest').value}))}catch{}}
-const saved=safeGet();if(saved){for(const p of (saved.prices||[])){const s=stations.find(v=>v.id===p.id);if(s){if(p.manual&&Number.isFinite(+p.price)&&+p.price>0){s.manual=true;s.price=+p.price;s.source='Manuale';}if(p.extra!==null && p.extra!=='' && Number.isFinite(+p.extra)&&+p.extra>=0) s.extra=+p.extra;}}['kg','consumption','origin','dest'].forEach(id=>{if(saved[id]!==undefined)$(id).value=saved[id]});}
+function safeSet(){try{localStorage.setItem(SAVEKEY,JSON.stringify({prices:stations.map(s=>({id:s.id,price:s.price,manual:s.manual,extra:s.extra,lastDate:s.lastDate,source:s.source||''})),kg:$('kg').value,consumption:$('consumption').value,consumptionUnit:'km/kg',origin:$('origin').value,dest:$('dest').value}))}catch{}}
+const saved=safeGet();if(saved){for(const p of (saved.prices||[])){const s=stations.find(v=>v.id===p.id);if(s){if(p.manual&&Number.isFinite(+p.price)&&+p.price>0){s.manual=true;s.price=+p.price;s.source='Manuale';}if(p.extra!==null && p.extra!=='' && Number.isFinite(+p.extra)&&+p.extra>=0) s.extra=+p.extra;}}['kg','origin','dest'].forEach(id=>{if(saved[id]!==undefined)$(id).value=saved[id]});
+ const previous=val(saved.consumption);
+ if(Number.isFinite(previous)&&previous>0)
+  $('consumption').value=saved.consumptionUnit==='km/kg'?previous.toFixed(2):(100/previous).toFixed(2);}
 function buildCards(){
  for(const s of stations){const el=document.createElement('article');el.className='station';el.innerHTML=`<div class="row between"><div><h3>${s.name} <span style="color:#5f7980;font-weight:500">· ${s.place}</span></h3><div class="addr tiny">${s.address}</div></div><span id="mode_${s.id}" class="mode">Riferimento</span></div><label class="tiny" for="price_${s.id}">Prezzo metano (€/kg)</label><div class="price-wrap"><input id="price_${s.id}" type="number" inputmode="decimal" min="0.1" max="9.999" step="0.001" value="${s.price.toFixed(3)}"><span>€/kg</span></div><div id="source_${s.id}" class="source">Riferimento: ${s.lastDate}</div><div class="tools"><a href="${s.link}" target="_blank" rel="noopener noreferrer">Scheda distributore</a><button type="button" class="reset" id="reset_${s.id}">Ripristina auto</button></div><details><summary class="tiny" style="cursor:pointer;margin-top:10px">Orari indicativi del servizio</summary><div class="tiny" style="padding-top:5px">${s.hours}. Verifica disponibilità metano.</div></details>`;$('stations').appendChild(el);
   const input=$('price_'+s.id);input.addEventListener('input',()=>{s.price=val(input.value);s.manual=true;s.source='Manuale';updateCard(s);safeSet();calculate()});
@@ -59,10 +62,10 @@ function extraWidget(){
 }
 function calculate(){const qty=val($('kg').value),cons=val($('consumption').value),good=qty>0&&cons>0&&stations.every(s=>s.price>0&&s.price<10&&s.extra!==null&&Number.isFinite(s.extra)&&s.extra>=0),out=$('outcome');
  if(!good){out.className='result no';out.innerHTML='<div class="lead">Da completare</div><div class="big">Calcola le deviazioni</div><div class="sub">Inserisci i chilometri extra per ciascun distributore (manualmente o tramite il calcolo stradale). Prezzi, quantità e consumo devono essere validi.</div>';$('costs').innerHTML='';$('assumptions').textContent='';return}
- const results=stations.map(s=>({...s,fuel:qty*s.price,detour:s.extra*cons/100*s.price,total:(qty+s.extra*cons/100)*s.price})).sort((a,b)=>a.total-b.total);const best=results[0],worst=results[results.length-1],second=results[1];
+ const results=stations.map(s=>({...s,fuel:qty*s.price,detour:s.extra/cons*s.price,total:(qty+s.extra/cons)*s.price})).sort((a,b)=>a.total-b.total);const best=results[0],worst=results[results.length-1],second=results[1];
  out.className='result';out.innerHTML='<div class="lead">Distributore più conveniente</div><div class="big">'+best.name+' · '+best.place+'</div><div class="sub">Costo totale stimato: <strong>'+fmtMoney(best.total)+'</strong> · Risparmi <strong>'+fmtMoney(worst.total-best.total)+'</strong> rispetto all’opzione più cara e '+fmtMoney(second.total-best.total)+' rispetto alla seconda.</div>';
  $('costs').innerHTML=results.map((s,i)=>'<div class="cost '+(i===0?'winner':'')+'"><div><strong>'+(i+1)+'. '+s.name+' · '+s.place+'</strong><div class="tiny">'+fmtNum(s.price,3)+' €/kg • +' +fmtNum(s.extra,1)+' km</div></div><div class="costvalue">'+fmtMoney(s.total)+'</div><p class="sub">Pieno '+fmtMoney(s.fuel)+' + deviazione '+fmtMoney(s.detour)+'</p></div>').join('');
- $('assumptions').textContent='Confronto su '+fmtNum(qty,1)+' kg e consumo '+fmtNum(cons,1)+' kg/100 km. Non include tempo, usura o pedaggi.';
+ $('assumptions').textContent='Confronto su '+fmtNum(qty,1)+' kg e consumo '+fmtNum(cons,2)+' km/kg. Non include tempo, usura o pedaggi.';
 }
 $('kg').addEventListener('input',()=>{safeSet();calculate()});$('consumption').addEventListener('input',()=>{safeSet();calculate()});
 function setTab(which){mode=which;$('autoTab').classList.toggle('selected',which==='route');$('manualTab').classList.toggle('selected',which!=='route');$('autoPanel').classList.toggle('hidden',which!=='route');$('manualPanel').classList.toggle('hidden',which==='route');if(which==='route'&&map)setTimeout(()=>map.invalidateSize(),200);calculate()}
@@ -129,20 +132,49 @@ async function geocode(addr){
  }catch(e){if(!nominatimError)nominatimError=e}
  throw Error((nominatimError?'Geocodifica non disponibile ('+(nominatimError.name==='AbortError'?'tempo massimo di attesa':nominatimError.message)+'). ':'')+'Indirizzo non individuato con precisione: '+addr+'. Verifica l’indirizzo oppure usa coordinate latitudine, longitudine.')
 }
-async function routeBetween(arr){
- const coords=arr.map(p=>p.lon+','+p.lat).join(';');
- const hosts=['https://router.project-osrm.org/route/v1/driving/','https://routing.openstreetmap.de/routed-car/route/v1/driving/'];
+// Il servizio dimostrativo Valhalla consente il costo calcolato per sola distanza.
+async function valhallaShortRoute(points){
+ await paceService('route');
+ const request={locations:points.map(p=>({lat:p.lat,lon:p.lon})),costing:'auto',costing_options:{auto:{shortest:true}},
+  units:'kilometers',format:'osrm',shape_format:'geojson',directions_type:'none'};
+ const url='https://valhalla1.openstreetmap.de/route?json='+encodeURIComponent(JSON.stringify(request));
+ const response=await fetchTimeout(url,{headers:{'X-Client-Id':'angid18.github.io-metano-convenienza'}},14000);
+ const data=await response.json(),route=data.routes?.[0];
+ if(!route||!Number.isFinite(route.distance)||!Array.isArray(route.geometry?.coordinates))throw Error('Valhalla: risposta non valida');
+ return route;
+}
+async function osrmAlternativeShortRoute(points){
+ const coords=points.map(p=>p.lon+','+p.lat).join(';');
  let lastError=null;
- for(const host of hosts){
+ for(const host of ['https://router.project-osrm.org/route/v1/driving/','https://routing.openstreetmap.de/routed-car/route/v1/driving/']){
   await paceService('route');
   try{
-   const r=await fetchTimeout(host+coords+'?overview=full&geometries=geojson&steps=false',{},24000);
-   const data=await r.json();
-   if(data.code==='Ok'&&data.routes?.length)return data.routes[0];
-   throw Error('tratta non percorribile ('+(data.code||'risposta non valida')+')');
+   const result=await fetchTimeout(host+coords+'?overview=full&geometries=geojson&steps=false&alternatives=3',{},24000),data=await result.json();
+   if(data.code!=='Ok'||!data.routes?.length)throw Error('Nessun tragitto disponibile');
+   const options=data.routes.filter(r=>Number.isFinite(r.distance)&&Array.isArray(r.geometry?.coordinates));
+   if(!options.length)throw Error('Distanze non disponibili');
+   return options.reduce((a,b)=>b.distance<a.distance?b:a);
   }catch(e){lastError=e}
  }
- throw Error('Servizi di calcolo stradale non disponibili ('+(lastError?.name==='AbortError'?'tempo massimo di attesa':lastError?.message||'errore di rete')+')')
+ throw Error('Servizio OSRM non disponibile: '+(lastError?.name==='AbortError'?'tempo massimo di attesa':lastError?.message||'errore di rete'));
+}
+async function shortestRoutes(points,status){
+ try{
+  const paths=[];
+  for(let i=0;i<points.length;i++){
+   status.textContent='Percorso '+(i+1)+' di '+points.length+' · distanza più breve (Valhalla)...';
+   paths.push(await valhallaShortRoute(points[i]));
+  }
+  return {paths,source:'Valhalla · percorso breve'};
+ }catch(e){
+  console.warn('Valhalla non disponibile, ripiego su OSRM:',e);
+  const paths=[];
+  for(let i=0;i<points.length;i++){
+   status.textContent='Percorso '+(i+1)+' di '+points.length+' · alternativa più breve (OSRM)...';
+   paths.push(await osrmAlternativeShortRoute(points[i]));
+  }
+  return {paths,source:'OSRM · più breve tra le alternative'};
+ }
 }
 function drawMap(orig,dest,locs,allRoutes){
  if(typeof L==='undefined')return false;
@@ -173,14 +205,14 @@ function drawMap(orig,dest,locs,allRoutes){
 $('routeBtn').onclick=async()=>{const btn=$('routeBtn');btn.disabled=true;const status=$('routeStatus');status.className='status';status.textContent='Geolocalizzazione dei punti del percorso...';try{
  const cache=new Map(),geo=async addr=>{if(!cache.has(addr))cache.set(addr,await geocode(addr));return cache.get(addr)};
  if(!$('origin').value.trim()||!$('dest').value.trim())throw Error('Inserisci partenza e destinazione');const orig=await geo($('origin').value.trim()),dest=await geo($('dest').value.trim()),locs={};for(const s of stations)locs[s.id]=await geo(s.address);
- const paths=[],totalRoutes=stations.length+1;status.textContent='Calcolo percorso 1 di '+totalRoutes+' · tragitto diretto...';paths.push(await routeBetween([orig,dest]));
- for(let i=0;i<stations.length;i++){status.textContent='Calcolo percorso '+(i+2)+' di '+totalRoutes+' · '+stations[i].name+'...';paths.push(await routeBetween([orig,locs[stations[i].id],dest]))}
+ const points=[[orig,dest],...stations.map(st=>[orig,locs[st.id],dest])];
+ const routing=await shortestRoutes(points,status),paths=routing.paths;
  const base=paths[0].distance/1000;
  stations.forEach((s,i)=>{s.extra=Math.max(0,(paths[i+1].distance-paths[0].distance)/1000);$('extra_'+s.id).value=s.extra.toFixed(2)});routeReady=true;
- $('routestats').innerHTML='<div class="grid2"><div class="stat"><div class="tiny">Tragitto diretto</div><b>'+fmtNum(base,1)+' km</b></div><div class="stat"><div class="tiny">Deviazioni misurate</div>'+stations.map(s=>'<div style="margin:5px 0">'+s.name+' · '+s.place+': <b style="display:inline;font-size:15px">+'+fmtNum(s.extra,1)+' km</b></div>').join('')+'</div></div>';
+ $('routestats').innerHTML='<div class="grid2"><div class="stat"><div class="tiny">Tragitto diretto · '+routing.source+'</div><b>'+fmtNum(base,1)+' km</b></div><div class="stat"><div class="tiny">Deviazioni misurate</div>'+stations.map(s=>'<div style="margin:5px 0">'+s.name+' · '+s.place+': <b style="display:inline;font-size:15px">+'+fmtNum(s.extra,1)+' km</b></div>').join('')+'</div></div>';
  // Il confronto economico deve funzionare anche quando la mappa non viene visualizzata.
  safeSet();calculate();
- status.textContent='Deviazioni e costi calcolati correttamente.';
+ status.textContent='Deviazioni e costi calcolati ('+routing.source+').';
  try{
   const mapReady=drawMap(orig,dest,locs,paths);
   status.textContent=mapReady?'Deviazioni e costi calcolati. La mappa indica i percorsi stradali.':'Deviazioni e costi calcolati. Mappa non disponibile, ma il confronto è completo.';

@@ -37,3 +37,9 @@ Percorsi: servizi pubblici OpenStreetMap / Nominatim / Photon / OSRM. Le distanz
 ## Collegamenti gratuiti a Google Maps
 
 Ogni distributore offre «Apri itinerario in Google Maps», che apre nel browser o nell'app Google Maps il tragitto stradale tra la partenza e la destinazione salvate nel browser, passando per quel distributore come tappa. Se partenza o destinazione non sono ancora inserite, apre una ricerca della stazione. Usa le URL gratuite di Google Maps senza alcuna API key né necessità di fatturazione. I chilometri aggiuntivi e il confronto economico integrati restano basati su OpenStreetMap/OSRM; Google Maps può proporre distanze differenti. Gli indirizzi vengono inseriti nel link solo al momento dell'apertura: non sono pubblicati nel repository, ma vengono trasmessi a Google quando il link viene aperto.
+
+## Consumo in km/kg e itinerari brevi
+
+- Il consumo viene espresso come **resa km/kg**. Formula: `costo_devizione = km_extra / km_per_kg × prezzo_metano_al_kg`.
+- I vecchi valori in kg/100 km vengono convertiti automaticamente **una sola volta** grazie all'attributo `consumptionUnit` salvato nel browser; ad esempio 4,2 kg/100 km diventa 23,81 km/kg.
+- Per valutare itinerari brevi, la web app usa prima Valhalla con `costing_options.auto.shortest=true` (distanza come costo, server demo pubblico e gratuito). In caso di errore, ricalcola tutti e cinque i percorsi con OSRM (`alternatives=3`) scegliendo quello con il minor numero di km tra le alternative restituite. Non è garantito il percorso più breve in assoluto. I servizi sono soggetti a disponibilità e limiti di utilizzo. Gli indirizzi vengono inviati al servizio cartografico solo quando viene richiesto il calcolo.
